@@ -1,13 +1,36 @@
 import cv2
+import numpy as np
 from matplotlib import pyplot as plt
+from keras.preprocessing.image import ImageDataGenerator
 
-# Load the image
-img = cv2.imread('peanut.jpg')  # Make sure this image is in your project folder
+def load_and_resize_image(image_path, size=(224, 224)):
+    img = cv2.imread(image_path)
+    img_resized = cv2.resize(img, size)
+    return img_resized
 
-# Convert from BGR (OpenCV default) to RGB for displaying with matplotlib
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+def normalize_image(image):
+    return image / 255.0
 
-# Display the image
-plt.imshow(img_rgb)
-plt.axis('off')  # Hide axes for better view
-plt.show()
+datagen = ImageDataGenerator(
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest'
+)
+
+def preprocess_image(image_path):
+    img = load_and_resize_image(image_path)
+    image_normalized = normalize_image(img)
+    return image_normalized
+
+if __name__ == "__main__":
+    image_path = 'peanut.jpg'
+    processed_image = preprocess_image(image_path)
+
+    # Display the image
+    plt.imshow(processed_image)
+    plt.axis('off')  # Hide axes for better view
+    plt.show()
