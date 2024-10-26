@@ -11,8 +11,12 @@
 
 2. **Directory Structure**:
    Place the extracted images in the following structure:
+   Food-Allergen-Detector/
+   ├── data/
+   │   ├── food-101/
+   │   │   ├── images/
 
-3. **Run the Preprocessing Code**:
+4. **Run the Preprocessing Code**:
 Execute the preprocessing script:
 ```bash
 python src/data_preprocessing.py
