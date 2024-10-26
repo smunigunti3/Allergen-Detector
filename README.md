@@ -11,6 +11,7 @@
 
 2. **Directory Structure**:
    Place the extracted images in the following structure:
+
    Food-Allergen-Detector/
    ├── data/
    │   ├── food-101/
