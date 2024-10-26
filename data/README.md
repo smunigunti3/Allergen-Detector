@@ -1,0 +1,1 @@
+This folder should contain the images from the Food 101 dataset
