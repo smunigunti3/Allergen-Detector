@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Allergen Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .upload-container.dragover {
+            background-color: #e1f5fe;
+            border-color: #2196f3;
+        }
+
+        #preview-image {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        #upload-btn {
+            background-color: #2196f3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #upload-btn:hover {
+            background-color: #1976d2;
+        }
+
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Food Allergen Analyzer</h1>
+    <p>Upload a picture of your food to check for potential allergens</p>
+
+    <div class="upload-container" id="drop-zone">
+        <input type="file" id="file-input" accept="image/*" style="display: none;">
+        <button id="upload-btn">Choose Image or Drop Here</button>
+        <img id="preview-image" alt="Preview">
+    </div>
+
+    <div id="results">
+        <h2>Potential Allergens</h2>
+        <p id="allergens-list">No allergens detected yet.</p>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const uploadBtn = document.getElementById('upload-btn');
+        const previewImage = document.getElementById('preview-image');
+        const results = document.getElementById('results');
+        const allergensList = document.getElementById('allergens-list');
+
+        // Handle click on upload button
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Handle drag and drop
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // Check if the file is an image
+                if (!file.type.startsWith('image/')) {
+                    alert('Please upload an image file.');
+                    return;
+                }
+
+                // Display preview
+                const reader = new FileReader();
+                reader.onload =
