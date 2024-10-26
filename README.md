@@ -17,5 +17,5 @@ Execute the preprocessing script:
 ```bash
 python src/data_preprocessing.py
 ```
-4. ***Check Processed Images***:
+4. **Check Processed Images**:
    After running the script, the processed images will be in the data/processed_images folder.
